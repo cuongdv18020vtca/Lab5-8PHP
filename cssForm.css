@@ -1,0 +1,27 @@
+form{
+    text-align: center;
+}
+.row{
+    display: flex;
+}
+.form{
+    margin-left:25%;
+}
+input{
+    border: 1.3px solid gray;
+    border-radius: 3px;
+    background-color: whitesmoke;
+}
+label{
+    text-align: left;
+    width: 8rem;
+   
+}
+button{
+    background-color: mediumblue;
+    border: 1px solid mediumblue;
+    border-radius: 4px;
+    width: 5rem; 
+    height: 2rem;
+    color: white;
+}
