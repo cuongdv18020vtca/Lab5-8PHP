@@ -8,29 +8,30 @@ try {
     if ($conn->connect_error) {
         die("Connection failed:" . $conn->connect_error);
     }
-    $Username = $_POST["first_name"];
-    $Password = $_POST["password"];
-    // $hashed = password_verify($Password,PASSWORD_DEFAULT);
-
-    // $hashed_passcode = password_verify($Password, PASSWORD_DEFAULT);
-    // echo $hashed_passcode;
-    // echo $hashed;
-    $query = "select * from user";
-    $result = $conn->query($query);
-    if (isset($_POST["submit"])) {
-        while ($row = $result->fetch_assoc()) {
-           if (password_verify( $_POST["password"],$row["passwords"]) && $row["first_name"] === $_POST["first_name"]) {
-               $_SESSION["first_name"] = $_POST["first_name"];
-                header('Location: AdminPage.php');
-                break;
-            } 
-            else {
-                header('Location: LoginFormOnlineShop.php');
-            } 
+    if (isset($_POST["login"])) {
+        if (empty($_POST["email"]) or empty($_POST["password"])) {
+            $_SESSION["Err"] = "Vui long khong de trong";
+            header('Location:LoginFormOnlineShop.php');
+        } else {
+            $Username = $_POST["first_name"];
+            $Password = $_POST["password"];
+            
+            $query = "select * from user";
+            $result = $conn->query($query);
+            if (isset($_POST["login"])) {
+                while ($row = $result->fetch_assoc()) {
+                    if (password_verify($_POST["password"], $row["passwords"]) && $row["email"] === $_POST["email"]) {
+                        $_SESSION["email"] = $_POST["email"];
+                        header('Location: AdminPage.php');
+                        break;
+                    } else {
+                        $_SESSION["Err"] = "Email or password invalid!";
+                        header('Location: LoginFormOnlineShop.php');
+                    }
+                }
+            }
         }
     }
-
-    
 } catch (\Throwable $th) {
     //throw $th;
 }
